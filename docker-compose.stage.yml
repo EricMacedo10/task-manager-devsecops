@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  app-stage:
+    image: task-manager-flask:latest
+    container_name: task-manager-stage
+    restart: unless-stopped
+    ports:
+      - "8080:5000"
+    environment:
+      - FLASK_ENV=production
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - stage-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus-stage
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - stage-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana-stage
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - stage-network
+
+networks:
+  stage-network:
+    driver: bridge
