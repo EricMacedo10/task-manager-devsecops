@@ -75,7 +75,7 @@ jobs:
       - name: Subir Aplicação Localmente (Stage)
         run: |
           docker build -t task-manager-flask .
-          docker-compose -f docker-compose.stage.yml up -d
+          docker compose -f docker-compose.stage.yml up -d
           sleep 15
 
       - name: Executar OWASP ZAP (DAST)
