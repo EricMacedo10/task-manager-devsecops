@@ -43,7 +43,7 @@ jobs:
         run: bandit -r . -f html -o bandit-report.html || true
 
       - name: Salvar Relatório SAST
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: bandit-report
           path: bandit-report.html
